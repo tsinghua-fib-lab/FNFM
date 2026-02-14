@@ -28,7 +28,7 @@ from vae.layer_ae_trainer import LayerAE_Trainer
 from vae.layer_tokenizer_transformer import LayerVAE
 torch.set_num_threads(20)
 ###########
-model_name='v_GWN'
+# model_name='v_STGCN5'
 ###########
 def set_seed(seed):
     torch.manual_seed(seed)
@@ -573,7 +573,7 @@ def save_trajectory(
 
     # 2. Save the generated weights
     results_folder = Path(f'./ModelSave/exp{args.expIndex}')
-    generated_weights_path = results_folder / (args.targetDataset + model_name+"generated_weights.npz")
+    generated_weights_path = results_folder / (args.targetDataset + args.model_name+"generated_weights.npz")
     np.savez(generated_weights_path, indices=all_generated_indices,coefficients= all_generated_coefficients,weights=all_generated_params)
     print(f"Saved generated weights to {generated_weights_path}")
     diffusion_model.train()
@@ -826,6 +826,7 @@ if __name__ == '__main__':
     parser.add_argument("--cfm_epochs", type=int, default=300, help="Total training steps for diffusion model")
     parser.add_argument("--ae_epochs", type=int, default=500, help="Total training steps for autoencoder")
     parser.add_argument("--denoise", type=str, default='cfmTransformer', help="Denoising model")
+    parser.add_argument("--model_name", type=str, default='v_STGCN5', help="Name of the model architecture")
     parser.add_argument("--modeldim", type=int, default=128, help="Model dimension")
     parser.add_argument("--batchsize", type=int, default=32, help="Batch size")
     parser.add_argument("--log_backend", type=str, default="wandb", choices=["tensorboard", "wandb", "none"], help="tensorboard/wandb/none")
@@ -966,7 +967,7 @@ if __name__ == '__main__':
     #model config
     "vae:d_model": 128,
     "vae:latent_dim": 32,
-    "vae:model_name": model_name,
+    "vae:model_name": args.model_name,
     "transformer:n_head": 8,
     "transformer:n_layer": 2,
     # Data Paths to be passed to the trainer
