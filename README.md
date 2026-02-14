@@ -83,7 +83,7 @@ This script will run `FNFM-main/Pretrain/PrepareParams/model2tensor.py` to perfo
 Finally, train the FNFM model.
 
 ```bash
-sh train_fnfm.sh
+bash train_fnfm.sh
 ```
 
 or
@@ -104,3 +104,4 @@ This script will start `1Dmain_torchcfm.py`, which loads the converted model par
 - `train_cfm.sh`: Trains the main FNFM model.
 
 You can modify the parameters in these scripts as needed, such as `CUDA_VISIBLE_DEVICES` to specify the GPU to use, `dataname` to choose the dataset, or other model training hyperparameters.
+
